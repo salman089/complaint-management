@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Controllers\Customer;
+
+use App\Models\Complaint;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class ComplaintController extends Controller
+{
+    public function index()
+    {
+        $complaints = Complaint::orderBy('id', 'asc')
+            ->where('user_id', auth()->id())
+            ->paginate(25);
+
+        return view('customer.complaints.index', compact('complaints'));
+    }
+
+    public function create()
+    {
+        return view('customer.complaints.create');
+    }
+
+    public function store(Request $request)
+    {
+
+        $data = $request->validate([
+            'complaint' => ['required'],
+            'files' => ['nullable', 'array'],
+            'files.*' => ['required', 'image', 'mimes:jpg,png,jpeg'],
+            'phone' => ['required'],
+            'street_address' => ['required'],
+            'city' => ['required'],
+            'region' => ['required'],
+            'postal_code' => ['required'],
+        ]);
+
+        $complaint = Complaint::create([
+            'user_id' => auth()->id(),
+            'complaint' => $data['complaint'],
+            'phone' => $data['phone'],
+            'street_address' => $data['street_address'],
+            'city' => $data['city'],
+            'region' => $data['region'],
+            'postal_code' => $data['postal_code'],
+        ]);
+
+        foreach ($data['files'] ?? []as $file) {
+            $path = $file->store('complaints', 'public');
+            $complaint->photos()->create(['file_path' => $path]);
+        }
+
+        //Mail::to(auth()->user()->email)->send(new ComplaintCreated($complaint));
+
+        return redirect()->route('customer.complaints.index')->with('success', 'Complaint submitted successfully.');
+    }
+
+    public function show($id)
+    {
+        $complaint = Complaint::findOrFail($id);
+        return view('customer.complaints.show', compact('complaint'));
+    }
+
+    public function accept($id)
+    {
+        $complaint = Complaint::findOrFail($id);
+        $complaint->update(['status' => 'accepted']);
+
+       // Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'accepted'));
+
+        return redirect()->route('customer.complaints.index')->with('success', 'Complaint accepted successfully.');
+    }
+
+    public function reject($id)
+    {
+        $complaint = Complaint::findOrFail($id);
+        $complaint->update(['status' => 'rejected']);
+
+        //Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'rejected'));
+
+        return redirect()->route('customer.complaints.index')->with('danger', 'Complaint rejected successfully.');
+    }
+}
