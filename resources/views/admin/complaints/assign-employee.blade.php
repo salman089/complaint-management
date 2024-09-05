@@ -17,10 +17,9 @@
                         <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Assign
                             to</label>
                             <div class="relative mt-2">
-                                <select name="employee_id"
+                                <select name="user_ids[]" multiple
                                     class="relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm sm:leading-6"
                                     aria-labelledby="listbox-label" required>
-                                    <option value="">Select an employee</option>
                                     @foreach ($employees as $employee)
                                         <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach

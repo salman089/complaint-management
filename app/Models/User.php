@@ -13,9 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     // Assuming role is a field in your users table
-    protected $fillable = [
-        'name', 'email', 'password', 'role',
-    ];
+    protected $guarded = [];
 
     // You can also define a role check method if needed
     public function hasRole($role)

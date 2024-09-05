@@ -39,6 +39,21 @@
                 @endif
 
                 <div class="mt-4 ">
+                    <p><strong>Assinged To:</strong><br></p>
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+                        @forelse ($complaint->assignees as $assignee)
+                            <div>
+                                {{ $assignee->user->name }}
+                            </div>
+                        @empty
+                            <div>
+                                <p>No employees assigned.</p>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="mt-4 ">
                     <p><strong>Complaint Images:</strong><br></p>
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                         @forelse ($complaint->photos as $photo)

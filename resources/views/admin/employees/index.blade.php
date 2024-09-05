@@ -81,8 +81,7 @@
                                         {{ $employee->phone }}
                                     </td>
                                     <td class="px-6 py-4  text-sm text-gray-500">
-                                        {{ $employee->address }}, {{ $employee->city }}, {{ $employee->state }},
-                                        {{ $employee->postal_code }}
+                                        {{ $employee->address }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $employee->position }}

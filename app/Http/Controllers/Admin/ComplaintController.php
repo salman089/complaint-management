@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Complaint;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
@@ -52,7 +52,7 @@ class ComplaintController extends Controller
     public function assignEmployeeForm($id)
     {
         $complaint = Complaint::findOrFail($id);
-        $employees = Employee::all();
+        $employees = User::where('role', 'employee')->get();
         return view('admin.complaints.assign-employee', compact('complaint', 'employees'));
     }
 
@@ -60,11 +60,16 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
         $data = $request->validate([
-            'employee_id' => ['required', 'exists:employees,id'],
+            'user_ids' => ['required', 'array'],
+            'user_ids.*' => ['required', 'integer', 'exists:users,id'],
             'additional_notes' => ['nullable', 'string', 'max:256'],
         ]);
 
-        $complaint->update(['status' => 'assigned', 'employee_id' => $data['employee_id']]);
+        $complaint->update(['status' => 'assigned']);
+
+        foreach ($data['user_ids'] as $user_id) {
+            $complaint->assignees()->create(['user_id' => $user_id]);
+        }
 
         return redirect()->route('admin.complaints.index', ['status' => 'assigned'])->with('success', 'Complaint assigned successfully.');
     }

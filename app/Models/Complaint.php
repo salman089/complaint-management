@@ -28,8 +28,8 @@ class Complaint extends Model
         return $this->hasOne(Quotation::class);
     }
 
-    public function employee()
+    public function assignees()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->hasMany(ComplaintAssignee::class);
     }
 }

@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="flex justify-end gap-x-4">
-                    <a href="{{ route('admin.complaints.pending') }}"
+                    <a href="{{ route('admin.complaints.index') }}"
                         class="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 bg-white shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2">
                         Cancel
                     </a>

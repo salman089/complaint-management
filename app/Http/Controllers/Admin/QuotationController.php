@@ -13,7 +13,7 @@ class QuotationController extends Controller
     public function create($id)
     {
         $complaint = Complaint::findOrFail($id);
-        return view('admin.complaint.quote', compact('complaint'));
+        return view('admin.complaints.quote', compact('complaint'));
     }
 
     public function store(Request $request, $complaint_id)
@@ -38,7 +38,7 @@ class QuotationController extends Controller
 
         // Mail::to($complaint->user->email)->send(new QuotationSent($quotation, $data['price'], $data['quotation_details'], $data['additional_notes'] ?? null));
 
-        return redirect()->route('admin.quoted')->with('quoted', 'Quotation sent successfully.');
+        return redirect()->route('admin.complaints.index')->with('quoted', 'Quotation sent successfully.');
     }
 
 }

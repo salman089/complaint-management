@@ -79,38 +79,9 @@
                         <div class="col-span-full">
                             <label for="address" class="block text-sm font-medium text-gray-900">Address</label>
                             <div class="mt-2">
-                                <input type="text" name="address" id="address" autocomplete="street-address"
+                                <textarea rows=5 name="address" id="address" autocomplete="street-address"
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="Street Address" required>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2 sm:col-start-1">
-                            <label for="city" class="block text-sm font-medium text-gray-900">City</label>
-                            <div class="mt-2">
-                                <input type="text" name="city" id="city" autocomplete="address-level2"
-                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="City" required>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="state" class="block text-sm font-medium text-gray-900">State /
-                                Province</label>
-                            <div class="mt-2">
-                                <input type="text" name="state" id="state" autocomplete="address-level1"
-                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="State / Province" required>
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="postal_code" class="block text-sm font-medium text-gray-900">ZIP / Postal
-                                Code</label>
-                            <div class="mt-2">
-                                <input type="text" name="postal_code" id="postal_code" autocomplete="postal_code"
-                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                                    placeholder="ZIP / Postal Code" required>
+                                    placeholder="Full Address" required></textarea>
                             </div>
                         </div>
 
