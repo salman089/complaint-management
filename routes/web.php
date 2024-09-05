@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Employee\TaskController as EmployeeTaskController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\QuotationController;
-use App\Http\Controllers\Admin\AdminEmployeeController;
+use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
 use App\Http\Controllers\Customer\ComplaintController as CustomerComplaintController;
 
@@ -25,6 +25,9 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
 
     Route::get('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectionForm'])->name('rejection-form');
     Route::post('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectComplaint'])->name('reject-complaint');
+
+    Route::get('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployeeForm'])->name('assign-employee-form');
+    Route::post('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployee'])->name('assign-employee');
 
     Route::resource('employees', AdminEmployeeController::class)->except(['show']);
 
@@ -46,9 +49,10 @@ Route::middleware('role:customer')->prefix('/customer')->name('customer.')->grou
 // Employee Routes
 Route::middleware('role:employee')->prefix('/employee')->name('employee.')->group(function () {
     Route::get('/', [DashboardController::class, 'employee'])->name('home');
-    Route::get('/tasks', [EmployeeController::class, 'tasks'])->name('tasks');
-    Route::get('/tasks/pending', [EmployeeController::class, 'pending'])->name('pending');
-    Route::get('/tasks/completed', [EmployeeController::class, 'completed'])->name('completed');
+    Route::resource('tasks', EmployeeTaskController::class)->only(['index']);
+    // Route::get('/tasks', [EmployeeController::class, 'tasks'])->name('tasks');
+    // Route::get('/tasks/pending', [EmployeeController::class, 'pending'])->name('pending');
+    // Route::get('/tasks/completed', [EmployeeController::class, 'completed'])->name('completed');
 });
 
 // Profile Routes

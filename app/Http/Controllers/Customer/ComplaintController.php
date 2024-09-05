@@ -10,7 +10,7 @@ class ComplaintController extends Controller
 {
     public function index()
     {
-        $complaints = Complaint::orderBy('id', 'asc')
+        $complaints = Complaint::orderBy('id', 'desc')
             ->where('user_id', auth()->id())
             ->paginate(25);
 

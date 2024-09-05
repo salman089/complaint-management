@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
-class AdminEmployeeController extends Controller
+class EmployeeController extends Controller
 {
 
     public function index()
@@ -36,7 +36,7 @@ class AdminEmployeeController extends Controller
             'position' => ['required', 'string', 'max:255'],
         ]);
 
-        $employee = Employee::create([
+        Employee::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

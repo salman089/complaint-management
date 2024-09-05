@@ -27,6 +27,8 @@
                         <span class="text-green-500"> {{ $complaint->status }} </span>
                     @elseif ($complaint->status == 'rejected')
                         <span class="text-red-500"> {{ $complaint->status }} </span>
+                    @elseif ($complaint->status == 'assigned')
+                        <span class="text-orange-500"> {{ $complaint->status }} </span>
                     @endif
                 </p>
 
@@ -64,13 +66,13 @@
                             class="text-white bg-purple-600 hover:bg-grenn-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                             Quote
                         </a>
-                        <a href="{{ route('adct', $complaint->id) }}"
+                        <a href="{{ route('admin.rejection-form', $complaint->id) }}"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                             Reject
                         </a>
                     @elseif ($complaint->status == 'accepted')
-                        <a href="{{ route('admin.complaints.index', ['status' => $complaint->status]) }}"
-                            class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                        <a href="{{ route('admin.assign-employee-form', $complaint->id, ['status' => $complaint->status]) }}"
+                            class="text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                             Assign to an employee
                         </a>
                     @endif

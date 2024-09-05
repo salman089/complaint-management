@@ -5,7 +5,7 @@
             <div class="flex justify-between h-10">
                 <div class="flex">
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        @foreach (['pending', 'quoted', 'accepted', 'rejected'] as $complaintType)
+                        @foreach (['pending', 'quoted', 'accepted', 'rejected', 'assigned'] as $complaintType)
                             <x-sub-nav-link href="{{ route('admin.complaints.index', ['status' => $complaintType]) }}" :active="$status == $complaintType">
                                 {{ ucfirst($complaintType) }} Complaints
                             </x-sub-nav-link>

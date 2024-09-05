@@ -27,4 +27,9 @@ class Complaint extends Model
     {
         return $this->hasOne(Quotation::class);
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

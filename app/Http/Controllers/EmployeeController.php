@@ -9,10 +9,6 @@ use App\Models\Employee;
 class EmployeeController extends Controller
 {
 
-    public function tasks()
-    {
-        $tasks = Employee::where('user_id', Auth::id())->get();
-        return view('employee.tasks', compact('tasks'));
-    }
+
 }
 

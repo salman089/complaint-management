@@ -2,7 +2,7 @@
     <x-slot:title>Create Complaint</x-slot:title>
     <nav x-data="{ open: false }" class="bg-gray-800 pt-6">
         <div class="max-w-7xl mx-auto px-4 px-6 lg:px-8">
-            <div class="flex justify-between h-10">
+            <div class="flex justify-between h-12">
                 <div class="flex">
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-sub-nav-link href="{{ route('customer.complaints.index') }}" :active="request()->routeIs('customer.complaints.index')">
