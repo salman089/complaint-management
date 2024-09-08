@@ -21,11 +21,12 @@ class EmployeeController extends Controller
         return view('admin.employees.create');
     }
 
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:employees'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string', 'max:5000'],
@@ -55,7 +56,7 @@ class EmployeeController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:employees,email,'.$id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string', 'max:5000'],
             'position' => ['required', 'string', 'max:255'],
