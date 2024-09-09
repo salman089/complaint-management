@@ -32,6 +32,12 @@
                     </div>
                 @endif
 
+                @if (session('quote'))
+                    <div class="bg-purple-500 text-white p-4 rounded">
+                        {{ session('quote') }}
+                    </div>
+                @endif
+
                 <div class="p-6 text-gray-900">
                     @if ($complaints->count() > 0)
                         <ul role="list" class="divide-y divide-gray-100">

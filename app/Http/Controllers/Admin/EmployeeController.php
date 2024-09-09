@@ -65,7 +65,7 @@ class EmployeeController extends Controller
         $employee = User::findOrFail($id);
         $employee->update($data);
 
-        return redirect()->route('admin.employees.index')->with('success', 'Employee updated successfully.');
+        return redirect()->route('admin.employees.index')->with('update', 'Employee updated successfully.');
     }
 
 

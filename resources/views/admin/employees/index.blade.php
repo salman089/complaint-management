@@ -30,9 +30,9 @@
             </div>
         @endif
 
-        @if (session('updated'))
+        @if (session('update'))
             <div class="bg-blue-500 text-white p-4 rounded">
-                {{ session('updated') }}
+                {{ session('update') }}
             </div>
         @endif
 

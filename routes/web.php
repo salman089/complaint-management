@@ -49,8 +49,10 @@ Route::middleware('role:customer')->prefix('/customer')->name('customer.')->grou
 // Employee Routes
 Route::middleware('role:employee')->prefix('/employee')->name('employee.')->group(function () {
     Route::get('/', [DashboardController::class, 'employee'])->name('home');
-    Route::resource('tasks', EmployeeTaskController::class)->only(['index']);
-    // Route::get('/tasks', [EmployeeController::class, 'tasks'])->name('tasks');
+    Route::resource('tasks', EmployeeTaskController::class)->only(['index', 'show']);
+    Route::put('task/{id}/start', [EmployeeTaskController::class, 'start'])->name('task.start');
+    Route::get('task/{id}/complete', [EmployeeTaskController::class, 'showCompleteForm'])->name('task.complete-form');
+    Route::put('task/{id}/complete', [EmployeeTaskController::class, 'completeTask'])->name('task.complete');
     // Route::get('/tasks/pending', [EmployeeController::class, 'pending'])->name('pending');
     // Route::get('/tasks/completed', [EmployeeController::class, 'completed'])->name('completed');
 });

@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <a href="{{ route('customer.home') }}"
+                    <a href="{{ route('customer.complaints.index') }}"
                         class="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-900 bg-white shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2">
                         Cancel
                     </a>

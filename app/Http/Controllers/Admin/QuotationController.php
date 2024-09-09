@@ -38,7 +38,7 @@ class QuotationController extends Controller
 
         // Mail::to($complaint->user->email)->send(new QuotationSent($quotation, $data['price'], $data['quotation_details'], $data['additional_notes'] ?? null));
 
-        return redirect()->route('admin.complaints.index')->with('quoted', 'Quotation sent successfully.');
+        return redirect()->route('admin.complaints.index', ['status' => 'quoted'])->with('quote', 'Quotation sent successfully.');
     }
 
 }

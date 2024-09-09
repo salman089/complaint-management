@@ -1,20 +1,11 @@
 <!-- resources/views/admin/show-employee.blade.php -->
 <x-app-layout>
-    <x-slot:title>All Employees</x-slot:title>
-    <nav x-data="{ open: false }" class="bg-gray-800 pt-6">
-        {{-- <div class="max-w-7xl mx-auto px-4 px-6 lg:px-8">
-            <div class="flex justify-between h-10">
-                <div class="flex">
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-sub-nav-link href="{{ route('admin.employees.index') }}" :active="request()->routeIs('admin.employees.index')">All
-                            Employees</x-sub-nav-link>
-                        <x-sub-nav-link href="{{ route('admin.employees.create') }}"
-                            class="text-blue-500 flex justify-end">Add Employee</x-sub-nav-link>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-    </nav>
+    <x-slot name="header">
+        <x-slot:title>Tasks</x-slot:title>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Tasks
+        </h2>
+    </x-slot>
 
 
     <div class="py-6 px-10">
@@ -56,6 +47,10 @@
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Actions
                                 </th>
                             </tr>
@@ -72,16 +67,12 @@
                                     <td class="px-6 py-4  text-sm text-gray-500">
                                         {{ $task->complaint->street_address }}
                                     </td>
+                                    <td class="px-6 py-4  text-sm text-gray-500">
+                                        {{ $task->complaint->status }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        {{-- <a href="{{ route('admin.employees.edit', $employee->id) }}"
-                                            class="text-blue-600 hover:text-blue-900">Edit</a>
-                                        <form action="{{ route('admin.employees.destroy', $employee->id) }}"
-                                            method="POST" class="inline-block ml-4">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="text-red-600 hover:text-red-900">Delete</button>
-                                        </form> --}}
+                                        <a href="{{ route('employee.tasks.show', $task->id) }}"
+                                            class="text-blue-600 hover:text-blue-900">View</a>
                                     </td>
                                 </tr>
                             @endforeach
