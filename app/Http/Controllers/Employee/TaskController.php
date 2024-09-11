@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Employee;
 
+use App\Models\Complaint;
 use Illuminate\Http\Request;
+use App\Models\CompletionImage;
 use App\Models\ComplaintAssignee;
 use App\Http\Controllers\Controller;
-use App\Models\Complaint;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -41,7 +42,7 @@ class TaskController extends Controller
     {
         $data = $request->validate([
             'completion_note' => ['required', 'string', 'max:256'],
-            'completion_image.*' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'completion_image.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
         $complaint = Complaint::findOrFail($id);
@@ -49,17 +50,17 @@ class TaskController extends Controller
         $complaint->status = 'completed';
         $complaint->completion_note = $data['completion_note'];
         $complaint->completed_date = now();
+        $complaint->save();
 
         if ($request->hasFile('completion_image')) {
-            $images = [];
             foreach ($request->file('completion_image') as $file) {
-                $imagePath = $file->store('complaint_images', 'public');
-                $images[] = $imagePath;
+                $path = $file->store('completion_images', 'public');
+                CompletionImage::create([
+                    'complaint_id' => $complaint->id,
+                    'file_path' => $path,
+                ]);
             }
-            $complaint->completion_image = json_encode($images);
         }
-
-        $complaint->save();
 
         return redirect()->route('employee.tasks.index')->with('success', 'Task completed successfully.');
     }

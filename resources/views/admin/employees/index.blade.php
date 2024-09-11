@@ -1,4 +1,3 @@
-<!-- resources/views/admin/show-employee.blade.php -->
 <x-app-layout>
     <x-slot:title>All Employees</x-slot:title>
     <nav x-data="{ open: false }" class="bg-gray-800 pt-6">

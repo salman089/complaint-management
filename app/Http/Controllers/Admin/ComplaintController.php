@@ -73,4 +73,11 @@ class ComplaintController extends Controller
 
         return redirect()->route('admin.complaints.index', ['status' => 'assigned'])->with('success', 'Complaint assigned successfully.');
     }
+
+    public function close($id)
+    {
+        $complaint = Complaint::findOrFail($id);
+        $complaint->update(['status' => 'closed']);
+        return redirect()->route('admin.complaints.index', ['status' => 'closed'])->with('danger', 'Complaint closed successfully.');
+    }
 }

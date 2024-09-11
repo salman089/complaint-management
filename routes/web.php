@@ -26,13 +26,18 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::get('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectionForm'])->name('rejection-form');
     Route::post('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectComplaint'])->name('reject-complaint');
 
+    Route::post('/complaint/{id}/close', [AdminComplaintController::class, 'close'])->name('complaint.close');
+
+
     Route::get('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployeeForm'])->name('assign-employee-form');
     Route::post('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployee'])->name('assign-employee');
+
 
     Route::resource('employees', AdminEmployeeController::class)->except(['show']);
 
     Route::get('/complaint/{id}/quote', [QuotationController::class, 'create'])->name('create');
     Route::post('/complaint/{id}/quote', [QuotationController::class, 'store'])->name('store');
+
 
 
 });

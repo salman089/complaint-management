@@ -15,55 +15,79 @@
         </div>
     </nav>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                @if (session('success'))
-                    <div class="bg-green-500 text-white p-4 rounded">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if (session('danger'))
-                    <div class="bg-red-500 text-white p-4 rounded">
-                        {{ session('danger') }}
-                    </div>
-                @endif
-
-                <div class="p-6 text-gray-900">
-                    @if ($complaints->count() > 0)
-                        <ul role="list" class="divide-y divide-gray-100">
-                            @foreach ($complaints as $complaint)
-                                <li class="flex justify-between gap-x-6 py-5">
-                                    <div class="flex min-w-0 gap-x-4">
-                                        <div class="px-10 flex-auto">
-                                            <p class="text-lg font-semibold leading-6 text-gray-900">
-                                                {{ $complaint->complaint }}</p>
-                                            <p class="mt-1 truncate text-sm leading-5 text-gray-500">
-                                                {{ $complaint->phone }}</p>
-                                            <p class="mt-1 truncate text-sm leading-5 text-gray-500">
-                                                {{ $complaint->street_address }}</p>
-                                            <p class="mt-1 truncate text-sm leading-5 text-gray-500">
-                                                {{ $complaint->city }}, {{ $complaint->region }}
-                                                {{ $complaint->postal_code }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end justify-center px-6">
-                                        <a href="{{ route('customer.complaints.show', $complaint->id) }}"
-                                            class="text-white bg-sky-500 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center transition-colors duration-300">View</a>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <div class="text-center py-10">
-                            <p class="text-sm font-bold leading-6 text-gray-900">No complaints yet.</p>
-                        </div>
-                    @endif
-                </div>
+    <div class="py-6 px-10">
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-4 rounded">
+                {{ session('success') }}
             </div>
-            <br>
-            {{ $complaints->links() }}
+        @endif
+
+        @if (session('danger'))
+            <div class="bg-red-500 text-white p-4 rounded">
+                {{ session('danger') }}
+            </div>
+        @endif
+
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
+                @if ($complaints->count() > 0)
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Complaint
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Phone
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Address
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($complaints as $complaint)
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">
+                                        {{ $complaint->complaint }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $complaint->phone }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $complaint->street_address }}, {{ $complaint->city }},
+                                        {{ $complaint->region }} - {{ $complaint->postal_code }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        {{ $complaint->status }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('customer.complaints.show', $complaint->id) }}"
+                                            class="text-blue-600 hover:text-blue-900">View</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="text-center py-10">
+                        <p class="text-sm font-bold leading-6 text-gray-900">No complaints yet.</p>
+                    </div>
+                @endif
+            </div>
         </div>
+        <br>
+        {{ $complaints->links() }}
     </div>
 </x-app-layout>

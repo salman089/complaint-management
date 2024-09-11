@@ -1,4 +1,3 @@
-<!-- resources/views/admin/show-employee.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <x-slot:title>Tasks</x-slot:title>

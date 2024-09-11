@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\ComplaintPhoto;
+use App\Models\CompletionImage;
+use App\Models\ComplaintAssignee;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -31,5 +33,10 @@ class Complaint extends Model
     public function assignees()
     {
         return $this->hasMany(ComplaintAssignee::class);
+    }
+
+    public function completionImages()
+    {
+        return $this->hasMany(CompletionImage::class);
     }
 }

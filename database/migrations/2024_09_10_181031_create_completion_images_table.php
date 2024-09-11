@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('complaint_photos', function (Blueprint $table) {
+        Schema::create('completion_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('complaint_id')->constrained();
+            $table->foreignId('complaint_id')->constrained()->onDelete('cascade');
             $table->string('file_path');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('complaint_photos');
+        Schema::dropIfExists('completion_images');
     }
 };
