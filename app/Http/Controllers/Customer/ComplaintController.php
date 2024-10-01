@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use App\Mail\ComplaintStatus;
+use App\Mail\ComplaintCreated;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ComplaintController extends Controller
 {
@@ -51,7 +54,7 @@ class ComplaintController extends Controller
             $complaint->photos()->create(['file_path' => $path]);
         }
 
-        //Mail::to(auth()->user()->email)->send(new ComplaintCreated($complaint));
+        Mail::to(auth()->user()->email)->send(new ComplaintCreated($complaint));
 
         return redirect()->route('customer.complaints.index')->with('success', 'Complaint submitted successfully.');
     }
@@ -67,7 +70,7 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($id);
         $complaint->update(['status' => 'accepted']);
 
-       // Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'accepted'));
+       Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'accepted'));
 
         return redirect()->route('customer.complaints.index')->with('success', 'Complaint accepted successfully.');
     }
@@ -77,7 +80,7 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($id);
         $complaint->update(['status' => 'rejected']);
 
-        //Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'rejected'));
+        Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'rejected'));
 
         return redirect()->route('customer.complaints.index')->with('danger', 'Complaint rejected successfully.');
     }

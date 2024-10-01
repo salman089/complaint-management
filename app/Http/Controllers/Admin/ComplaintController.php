@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Complaint;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use App\Mail\ComplaintRejected;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class ComplaintController extends Controller
 {
@@ -44,7 +46,7 @@ class ComplaintController extends Controller
 
         $complaint->update(['status' => 'rejected', 'reason' => $data['reason']]);
 
-        // Mail::to($complaint->user->email)->send(new ComplaintRejected($complaint, $data['reason']));
+        Mail::to($complaint->user->email)->send(new ComplaintRejected($complaint, $data['reason']));
 
         return redirect()->route('admin.complaints.index', ['status' => 'rejected'])->with('danger', 'Complaint rejected successfully.');
     }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\EmployeeCreated;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
@@ -33,7 +35,7 @@ class EmployeeController extends Controller
             'position' => ['required', 'string', 'max:255'],
         ]);
 
-        User::create([
+        $employee = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -42,6 +44,8 @@ class EmployeeController extends Controller
             'position' => $data['position'],
             'role' => 'employee',
         ]);
+
+        Mail::to($employee->email)->send(new EmployeeCreated($employee));
 
         return redirect()->route('admin.employees.index')->with('success', 'Employee created successfully.');
     }
