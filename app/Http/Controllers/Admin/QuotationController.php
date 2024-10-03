@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Complaint;
 use App\Models\Quotation;
+use App\Mail\QuotationSent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class QuotationController extends Controller
 {
@@ -26,7 +28,7 @@ class QuotationController extends Controller
 
         $complaint = Complaint::findOrFail($complaint_id);
 
-        Quotation::create([
+        $quotation = Quotation::create([
             'complaint_id' => $complaint->id,
             'customer_id' => $complaint->user_id,
             'price' => $data['price'],
@@ -36,7 +38,7 @@ class QuotationController extends Controller
 
         $complaint->update(['status' => 'quoted']);
 
-        // Mail::to($complaint->user->email)->send(new QuotationSent($quotation, $data['price'], $data['quotation_details'], $data['additional_notes'] ?? null));
+        Mail::to($complaint->user->email)->send(new QuotationSent($quotation, $data['price'], $data['quotation_details'], $data['additional_notes'] ?? null));
 
         return redirect()->route('admin.complaints.index', ['status' => 'quoted'])->with('quote', 'Quotation sent successfully.');
     }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Employee;
 
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use App\Mail\ComplaintStatus;
 use App\Models\CompletionImage;
 use App\Models\ComplaintAssignee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -28,6 +30,9 @@ class TaskController extends Controller
         $task = Complaint::findOrFail($id);
         $task->status = 'in progress';
         $task->save();
+
+        Mail::to($task->user->email)->send(new ComplaintStatus($task, 'in progress'));
+
 
         return redirect()->route('employee.tasks.index', $id)->with('success', 'Task has been started.');
     }
@@ -61,6 +66,8 @@ class TaskController extends Controller
                 ]);
             }
         }
+
+        Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'completed'));
 
         return redirect()->route('employee.tasks.index')->with('success', 'Task completed successfully.');
     }

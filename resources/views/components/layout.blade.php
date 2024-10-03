@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Styles -->
     <style>
         body {
             font-family: 'Figtree', sans-serif;
@@ -56,37 +53,42 @@
 <body>
     <header>
         <div class="logo">
-            <x-application-logo class="w-30 h-10" />
+            <x-application-logo class="w-20 h-16 text-gray-500 fill-current" />
         </div>
         <nav>
             <div class="flex space-x-4">
                 @auth
                     @if (auth()->user()->hasRole('admin'))
-                        <a href="{{ route('admin.home') }}" class="rounded-md px-4 py-2 text-gray-700  hover:text-black hover:bg-gray-500 transition">
+                        <a href="{{ route('admin.home') }}"
+                            class="px-4 py-2 text-gray-700 transition rounded-md hover:text-black hover:bg-gray-500">
                             Admin Dashboard
                         </a>
                     @elseif (auth()->user()->hasRole('employee'))
-                        <a href="{{ route('employee.home') }}" class="rounded-md px-4 py-2 text-gray-700  hover:text-black hover:bg-gray-500 transition">
+                        <a href="{{ route('employee.home') }}"
+                            class="px-4 py-2 text-gray-700 transition rounded-md hover:text-black hover:bg-gray-500">
                             Employee Dashboard
                         </a>
                     @elseif (auth()->user()->hasRole('customer'))
-                        <a href="{{ route('customer.home') }}" class="rounded-md px-4 py-2 text-gray-700  hover:text-black hover:bg-gray-500 transition">
+                        <a href="{{ route('customer.home') }}"
+                            class="px-4 py-2 text-gray-700 transition rounded-md hover:text-black hover:bg-gray-500">
                             Customer Dashboard
                         </a>
                     @else
-                        <a href="{{ url('/dashboard') }}" class="rounded-md px-4 py-2 text-gray-700  hover:text-black hover:bg-gray-500 transition">
+                        <a href="{{ url('/dashboard') }}"
+                            class="px-4 py-2 text-gray-700 transition rounded-md hover:text-black hover:bg-gray-500">
                             Dashboard
                         </a>
                     @endif
                 @endauth
 
                 @guest
-                    <a href="{{ route('login') }}" class="rounded-md px-4 py-2 text-gray-700 hover:bg-gray-200 transition">
+                    <a href="{{ route('login') }}" class="px-4 py-2 text-gray-700 transition rounded-md hover:bg-gray-200">
                         Log in
                     </a>
 
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="rounded-md px-4 py-2 bg-gray-700 text-white hover:text-black hover:bg-gray-400 transition">
+                        <a href="{{ route('register') }}"
+                            class="px-4 py-2 text-white transition bg-gray-700 rounded-md hover:text-black hover:bg-gray-400">
                             Register
                         </a>
                     @endif
@@ -95,13 +97,32 @@
         </nav>
     </header>
 
-    <main class="p-6 flex justify-center items-center">
+    <main class="flex items-center justify-center p-2">
         {{ $slot }}
     </main>
 
-    <footer class="p-4">
+    <footer class="p-2">
+        <p><strong>Opening Hours</strong></p>
+        <p><strong>Monday:</strong> 09:00 am to 01:30 pm</p>
+        <p><strong>Tuesday - Sunday:</strong> 09:00 am to 06:00 pm</p>
+        <hr class="my-4 border-gray-300">
+
+        <p>&copy; 1988 - {{ date('Y') }}. All rights reserved.</p>
         <p>Shaukat Electric Works</p>
-        <p>&copy; {{ date('Y') }}. All rights reserved.</p>
+        <p>Kalkai Kond, Dapoli</p>
+        <p>Designed and developed by Salman Shawkat Kazi</span>
+
+        <div class="flex items-center justify-center p-2">
+            <a href="tel:+919373486979" >
+                <img src="{{ asset('images/phone.png') }}" class="cursor-pointer h-9 w-9" alt="Phone Logo">
+            </a>
+            <a href="https://www.instagram.com/_salmankazi_/" target="_blank" class="mx-2">
+                <img src="{{ asset('images/instagram.png') }}" class="w-8 h-8 cursor-pointer" alt="Instagram Logo">
+            </a>
+            <a href="mailto:sskazi089@gmail.com?subject=Web Application Development" target="_blank">
+                <img src="{{ asset('images/email.png') }}" class="cursor-pointer h-9 w-9" alt="Email Logo">
+            </a>
+        </div>
     </footer>
 </body>
 

@@ -38,8 +38,6 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::get('/complaint/{id}/quote', [QuotationController::class, 'create'])->name('create');
     Route::post('/complaint/{id}/quote', [QuotationController::class, 'store'])->name('store');
 
-
-
 });
 
 // Customer Routes

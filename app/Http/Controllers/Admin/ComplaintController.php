@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Complaint;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use App\Mail\ComplaintStatus;
+use App\Mail\ComplaintAssigned;
 use App\Mail\ComplaintRejected;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -73,6 +75,8 @@ class ComplaintController extends Controller
             $complaint->assignees()->create(['user_id' => $user_id]);
         }
 
+        Mail::to($complaint->user->email)->send(new ComplaintAssigned($complaint, $data['user_ids'], $data['additional_notes'] ?? null));
+
         return redirect()->route('admin.complaints.index', ['status' => 'assigned'])->with('success', 'Complaint assigned successfully.');
     }
 
@@ -80,6 +84,9 @@ class ComplaintController extends Controller
     {
         $complaint = Complaint::findOrFail($id);
         $complaint->update(['status' => 'closed']);
+
+        Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'closed'));
+
         return redirect()->route('admin.complaints.index', ['status' => 'closed'])->with('danger', 'Complaint closed successfully.');
     }
 }
