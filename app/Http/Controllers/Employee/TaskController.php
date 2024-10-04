@@ -13,10 +13,17 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = ComplaintAssignee::where('user_id', Auth::id())->get();
-        return view('employee.tasks.index', compact('tasks'));
+        $status = $request->query('status', 'assigned');
+
+        $tasks = ComplaintAssignee::where('user_id', Auth::id())
+        ->whereHas('complaint', function ($query) use ($status) {
+            $query->where('status', $status);
+        })
+        ->get();
+
+        return view('employee.tasks.index', compact('status', 'tasks'));
     }
 
     public function show($id)

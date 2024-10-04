@@ -1,57 +1,58 @@
 <x-app-layout>
     <x-slot:title>View Complaints</x-slot:title>
-    <nav x-data="{ open: false }" class="bg-gray-800 pt-6">
-        <div class="max-w-7xl mx-auto px-4 px-6 lg:px-8">
+    <nav x-data="{ open: false }" class="pt-6 bg-gray-800">
+        <div class="px-4 px-6 mx-auto max-w-7xl lg:px-8">
             <div class="flex justify-between h-10">
                 <div class="flex">
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-sub-nav-link href="{{ route('customer.complaints.index') }}" :active="request()->routeIs('customer.complaints.index')">
                             All Complaints</x-sub-nav-link>
                         <x-sub-nav-link href="{{ route('customer.complaints.create') }}" :active="request()->routeIs('customer.complaints.create')"
-                            class="text-blue-500 flex justify-end">Create Complaint</x-sub-nav-link>
+                            class="flex justify-end text-blue-500">Create Complaint</x-sub-nav-link>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
-
-    <div class="py-6 px-10">
+    
+    <div class="py-12">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
         @if (session('success'))
-            <div class="bg-green-500 text-white p-4 rounded">
+            <div class="p-4 text-white bg-green-500 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
         @if (session('danger'))
-            <div class="bg-red-500 text-white p-4 rounded">
+            <div class="p-4 text-white bg-red-500 rounded">
                 {{ session('danger') }}
             </div>
         @endif
 
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
                 @if ($complaints->count() > 0)
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Complaint
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Phone
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Address
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Status
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                     Actions
                                 </th>
                             </tr>
@@ -72,7 +73,7 @@
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         {{ $complaint->status }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
                                         <a href="{{ route('customer.complaints.show', $complaint->id) }}"
                                             class="text-blue-600 hover:text-blue-900">View</a>
                                     </td>
@@ -81,7 +82,7 @@
                         </tbody>
                     </table>
                 @else
-                    <div class="text-center py-10">
+                    <div class="py-10 text-center">
                         <p class="text-sm font-bold leading-6 text-gray-900">No complaints yet.</p>
                     </div>
                 @endif

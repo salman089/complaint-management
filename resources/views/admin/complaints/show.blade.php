@@ -1,85 +1,100 @@
 <x-app-layout>
     <x-slot name="header">
         <x-slot:title>Complaint Details</x-slot:title>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             Complaint Details
         </h2>
     </x-slot>
 
-    <div class="py-12 px-10">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-4 py-2">
+    <div class="px-10 py-12">
+        <div class="px-4 py-2 overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Detail</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Information</th>
+                            <th
+                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50">
+                                Detail</th>
+                            <th
+                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50">
+                                Information</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Customer Id:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->user->id }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Customer Id:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->user->id }}
+                            </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Customer Name:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->user->name }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Customer Name:
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->user->name }}
+                            </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Complaint:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->complaint }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Complaint:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->complaint }}
+                            </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Phone:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->phone }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Phone:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->phone }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Street Address:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->street_address }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Street Address:
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                {{ $complaint->street_address }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">City:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->city }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">City:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->city }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Region:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->region }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Region:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->region }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Postal Code:</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->postal_code }}</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Postal Code:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->postal_code }}
+                            </td>
                         </tr>
 
                         @if ($complaint->status == 'completed' || $complaint->status == 'closed')
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Completed Date
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Completed Date
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                     {{ $complaint->completed_date }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Completed Note
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Completed Note
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                     {{ $complaint->completion_note }}</td>
                             </tr>
                         @endif
 
                         @if ($complaint->status != 'rejected' && $complaint->status != 'pending')
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Quotation Price:</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{{ number_format($complaint->quote->price, 2) }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Quotation
+                                    Price:</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                    ₹{{ number_format($complaint->quote->price, 2) }}</td>
                             </tr>
                         @elseif ($complaint->status == 'rejected')
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Rejected Reason:</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $complaint->reason }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Rejected
+                                    Reason:</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $complaint->reason }}
+                                </td>
                             </tr>
                         @endif
 
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Status</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Status</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                 @if ($complaint->status == 'pending')
                                     <span class="text-blue-500"> {{ $complaint->status }} </span>
                                 @elseif ($complaint->status == 'quoted')
@@ -99,19 +114,18 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">Assigned To:</td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                @forelse ($complaint->assignees as $assignee)
+                                    <div>{{ $assignee->user->name }}</div>
+                                @empty
+                                    <div>No employees assigned.</div>
+                                @endforelse
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-
-                <div class="mt-4">
-                    <p><strong>Assigned To:</strong></p>
-                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                        @forelse ($complaint->assignees as $assignee)
-                            <div>{{ $assignee->user->name }}</div>
-                        @empty
-                            <div>No employees assigned.</div>
-                        @endforelse
-                    </div>
-                </div>
 
                 <div class="mt-4">
                     <p><strong>Complaint Images:</strong></p>
@@ -119,7 +133,8 @@
                         @forelse ($complaint->photos as $photo)
                             <div>
                                 <a href="{{ asset('storage/' . $photo->file_path) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $photo->file_path) }}" height="250" class="w-full">
+                                    <img src="{{ asset('storage/' . $photo->file_path) }}" height="250"
+                                        class="w-full">
                                 </a>
                             </div>
                         @empty
@@ -135,7 +150,8 @@
                             @forelse ($complaint->completionImages as $image)
                                 <div>
                                     <a href="{{ asset('storage/' . $image->file_path) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $image->file_path) }}" height="250" class="w-full">
+                                        <img src="{{ asset('storage/' . $image->file_path) }}" height="250"
+                                            class="w-full">
                                     </a>
                                 </div>
                             @empty
@@ -148,16 +164,19 @@
         </div>
 
         <div class="relative mt-6">
-            <div class="absolute right-0 top-0 mt-4 flex space-x-2">
+            <div class="absolute top-0 right-0 flex mt-4 space-x-2">
                 @if ($complaint->status == 'pending')
-                    <a href="{{ route('admin.create', $complaint->id) }}" class="text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                    <a href="{{ route('admin.create', $complaint->id) }}"
+                        class="text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                         Quote
                     </a>
-                    <a href="{{ route('admin.rejection-form', $complaint->id) }}" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                    <a href="{{ route('admin.rejection-form', $complaint->id) }}"
+                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                         Reject
                     </a>
                 @elseif ($complaint->status == 'accepted')
-                    <a href="{{ route('admin.assign-employee-form', $complaint->id, ['status' => $complaint->status]) }}" class="text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                    <a href="{{ route('admin.assign-employee-form', $complaint->id, ['status' => $complaint->status]) }}"
+                        class="text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                         Assign to an employee
                     </a>
                 @elseif ($complaint->status == 'completed')
@@ -165,12 +184,14 @@
                         @csrf
                         @method('POST')
                         <button type="submit
-                            " class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                            "
+                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                             Close Complaint
                         </button>
                     </form>
                 @endif
-                <a href="{{ route('admin.complaints.index', ['status' => $complaint->status]) }}" class="text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
+                <a href="{{ route('admin.complaints.index', ['status' => $complaint->status]) }}"
+                    class="text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center">
                     Cancel
                 </a>
             </div>

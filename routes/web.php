@@ -22,6 +22,8 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::get('/', [DashboardController::class, 'admin'])->name('home');
 
     Route::resource('/complaints', AdminComplaintController::class)->only(['index', 'show']);
+    Route::get('/admin/employees/search', [AdminEmployeeController::class, 'search'])->name('employees.search');
+
 
     Route::get('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectionForm'])->name('rejection-form');
     Route::post('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectComplaint'])->name('reject-complaint');
@@ -44,6 +46,7 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
 Route::middleware('role:customer')->prefix('/customer')->name('customer.')->group(function () {
     Route::get('/', [DashboardController::class, 'customer'])->name('home');
     Route::view('/contact', 'customer.contact')->name('contact');
+    Route::view('/about', 'customer.about')->name('about');
     Route::resource('complaints', CustomerComplaintController::class)->only(['index', 'create', 'store', 'show']);
     Route::post('/complaint/{id}/accept', [CustomerComplaintController::class, 'accept'])->name('accept');
     Route::post('/complaint/{id}/reject', [CustomerComplaintController::class, 'reject'])->name('reject');

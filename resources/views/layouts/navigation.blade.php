@@ -39,6 +39,9 @@
                     <x-nav-link :href="route('customer.contact')" :active="request()->routeIs('customer.contact')">
                         Contact Us
                     </x-nav-link>
+                    <x-nav-link :href="route('customer.about')" :active="request()->routeIs('customer.about')">
+                        About Us
+                    </x-nav-link>
                     @endif
 
                     @if (auth()->user()->hasRole('admin'))
@@ -54,12 +57,6 @@
                     <x-nav-link :href="route('employee.tasks.index')" :active="request()->routeIs('employee.tasks.index')">
                         Tasks
                     </x-nav-link>
-                    {{-- <x-nav-link :href="route('employee.pending')" :active="request()->routeIs('employee.pending')">
-                        Pending Tasks
-                    </x-nav-link>
-                    <x-nav-link :href="route('employee.completed')" :active="request()->routeIs('employee.completed')">
-                        Completed Tasks
-                    </x-nav-link> --}}
                     @endif
                 </div>
             </div>

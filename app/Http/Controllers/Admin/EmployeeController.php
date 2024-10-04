@@ -18,6 +18,24 @@ class EmployeeController extends Controller
         return view('admin.employees.index', compact('employees'));
     }
 
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search' => ['required', 'string', 'max:255'],
+        ]);
+
+        $employees = User::where('role', 'employee')
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+                    ->orWhere('phone', 'like', '%' . $request->search . '%');
+            })
+            ->orderBy('name')
+            ->paginate(25);
+
+        return view('admin.employees.index', compact('employees'));
+    }
+
     public function create()
     {
         return view('admin.employees.create');
@@ -60,7 +78,7 @@ class EmployeeController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
             'phone' => ['required', 'string'],
             'address' => ['required', 'string', 'max:5000'],
             'position' => ['required', 'string', 'max:255'],
@@ -80,6 +98,4 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employees.index')->with('danger', 'Employee deleted successfully.');
     }
-
-
 }

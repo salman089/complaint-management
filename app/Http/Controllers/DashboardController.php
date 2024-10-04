@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Complaint;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
+use App\Models\ComplaintAssignee;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -37,9 +39,10 @@ class DashboardController extends Controller
         $quoted = Complaint::where('user_id', auth()->user()->id)->where('status', 'quoted')->get();
         $accepted = Complaint::where('user_id', auth()->user()->id)->where('status', 'accepted')->get();
         $rejected = Complaint::where('user_id', auth()->user()->id)->where('status', 'rejected')->get();
-        $closed = Complaint::where('user_id', auth()->user()->id)->where('status', 'closed')->get();
         $assigned = Complaint::where('user_id', auth()->user()->id)->where('status', 'assigned')->get();
+        $inprogress = Complaint::where('user_id', auth()->user()->id)->where('status', 'in progress')->get();
         $completed = Complaint::where('user_id', auth()->user()->id)->where('status', 'completed')->get();
+        $closed = Complaint::where('user_id', auth()->user()->id)->where('status', 'closed')->get();
 
         return view('customer.dashboard', compact(
             'complaints',
@@ -47,16 +50,52 @@ class DashboardController extends Controller
             'quoted',
             'accepted',
             'rejected',
-            'closed',
             'assigned',
-            'completed'
+            'inprogress',
+            'completed',
+            'closed',
         ));
     }
 
     public function employee()
     {
-        return view('employee.dashboard');
+       $tasks = ComplaintAssignee::where('user_id', Auth::id())
+            ->with('complaint') 
+            ->get();
+
+       $assigned = ComplaintAssignee::where('user_id', Auth::id())
+            ->whereHas('complaint', function ($query) {
+                $query->where('status', 'assigned');
+            })
+            ->get();
+
+        $inprogress = ComplaintAssignee::where('user_id', Auth::id())
+            ->whereHas('complaint', function ($query) {
+                $query->where('status', 'in progress');
+            })
+            ->get();
+
+        $completed = ComplaintAssignee::where('user_id', Auth::id())
+            ->whereHas('complaint', function ($query) {
+                $query->where('status', 'completed');
+            })
+            ->get();
+
+        $closed = ComplaintAssignee::where('user_id', Auth::id())
+            ->whereHas('complaint', function ($query) {
+                $query->where('status', 'closed');
+            })
+            ->get();
+
+        return view('employee.dashboard', compact(
+            'tasks',
+            'assigned',
+            'inprogress',
+            'completed',
+            'closed'
+        ));
     }
+
 
     public function admin()
     {
@@ -67,11 +106,30 @@ class DashboardController extends Controller
         $quoted = Complaint::where('status', 'quoted')->get();
         $accepted = Complaint::where('status', 'accepted')->get();
         $rejected = Complaint::where('status', 'rejected')->get();
-        $closed = Complaint::where('status', 'closed')->get();
         $assigned = Complaint::where('status', 'assigned')->get();
+        $inprogress = Complaint::where('status', 'in progress')->get();
         $completed = Complaint::where('status', 'completed')->get();
-        $total = Complaint::where('status', 'closed')->sum('price');
+        $closed = Complaint::where('status', 'closed')->get();
 
+
+        $acceptedComplaints = Complaint::where('status', 'accepted')->pluck('id')->toArray();
+        $assignedComplaints = Complaint::where('status', 'assigned')->pluck('id')->toArray();
+        $inprogessComplaints = Complaint::where('status', 'in progress')->pluck('id')->toArray();
+
+        $closedComplaints = Complaint::where('status', 'closed')->pluck('id')->toArray();
+        $completedComplaints = Complaint::where('status', 'completed')->pluck('id')->toArray();
+
+        $mergedAccepted = array_merge($acceptedComplaints, $assignedComplaints, $inprogessComplaints);
+
+        $mergedComplaints = array_merge($closedComplaints, $completedComplaints);
+
+        $paidAmount = Quotation::whereIn('complaint_id', $mergedComplaints)->sum('price');
+
+        $pendingAmount = Quotation::whereIn('complaint_id', $mergedAccepted)->sum('price');
+
+        $remainingAmount = $paidAmount - $pendingAmount;
+
+        $totalAmount = $paidAmount + $remainingAmount;
 
         return view('admin.dashboard', compact(
             'complaints',
@@ -81,10 +139,14 @@ class DashboardController extends Controller
             'quoted',
             'accepted',
             'rejected',
-            'closed',
             'assigned',
+            'inprogress',
             'completed',
-            'total'
+            'closed',
+            'paidAmount',
+            'pendingAmount',
+            'totalAmount',
+            'remainingAmount'
         ));
     }
 }
