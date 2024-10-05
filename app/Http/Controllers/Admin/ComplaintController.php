@@ -18,10 +18,27 @@ class ComplaintController extends Controller
     {
         $status = $request->query('status', 'pending');
 
-        $complaints = Complaint::where('status', $status)->latest()->paginate(25);
+        $complaints = Complaint::where('status', $status)->latest()->paginate(10);
 
         return view('admin.complaints.index', compact('complaints', 'status'));
     }
+
+    public function search(Request $request)
+    {
+        $status = $request->query('status', 'pending');
+
+        $request->validate([
+            'search' => ['required', 'string', 'max:255'],
+        ]);
+
+        $complaints = Complaint::where('status', $status)
+            ->where(function ($query) use ($request) {
+                $query->where('complaint', 'like', '%' . $request->search . '%');
+            })->paginate(10);
+
+        return view('admin.complaints.index', compact('status', 'complaints'));
+    }
+
 
     public function show($id)
     {
@@ -87,6 +104,6 @@ class ComplaintController extends Controller
 
         Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'closed'));
 
-        return redirect()->route('admin.complaints.index', ['status' => 'closed'])->with('danger', 'Complaint closed successfully.');
+        return redirect()->route('admin.complaints.index', ['status' => 'closed'])->with('success', 'Complaint closed successfully.');
     }
 }

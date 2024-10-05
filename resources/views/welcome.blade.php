@@ -71,7 +71,7 @@
             <div class="mt-6">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d949.9250330610669!2d73.194992!3d17.758763!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be9c351eaf5124b%3A0x5ea06e1c5a7e72a5!2sShaukat%20Electric%20Works!5e0!3m2!1sen!2sin!4v1727893550578!5m2!1sen!2sin"
-                    width="100%" height="450" style="border:0; border-radius: 0.5rem;" allowfullscreen=""
+                    width="100%" height="450" style="border:2; border-radius: 0.25rem;" allowfullscreen=""
                     loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>

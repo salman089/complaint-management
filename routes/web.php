@@ -20,9 +20,10 @@ Route::get('/dashboard', [DashboardController::class, 'redirect'])
 // Admin Routes
 Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'admin'])->name('home');
+    Route::get('/complaints/search', [AdminComplaintController::class, 'search'])->name('complaints.search');
+    Route::get('/employees/search', [AdminEmployeeController::class, 'search'])->name('employees.search');
 
     Route::resource('/complaints', AdminComplaintController::class)->only(['index', 'show']);
-    Route::get('/admin/employees/search', [AdminEmployeeController::class, 'search'])->name('employees.search');
 
 
     Route::get('/complaint/{id}/reject', [AdminComplaintController::class, 'rejectionForm'])->name('rejection-form');
@@ -34,12 +35,10 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::get('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployeeForm'])->name('assign-employee-form');
     Route::post('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployee'])->name('assign-employee');
 
-
     Route::resource('employees', AdminEmployeeController::class)->except(['show']);
 
     Route::get('/complaint/{id}/quote', [QuotationController::class, 'create'])->name('create');
     Route::post('/complaint/{id}/quote', [QuotationController::class, 'store'])->name('store');
-
 });
 
 // Customer Routes
@@ -47,6 +46,7 @@ Route::middleware('role:customer')->prefix('/customer')->name('customer.')->grou
     Route::get('/', [DashboardController::class, 'customer'])->name('home');
     Route::view('/contact', 'customer.contact')->name('contact');
     Route::view('/about', 'customer.about')->name('about');
+    Route::get('/complaints/search', [CustomerComplaintController::class, 'search'])->name('complaints.search');
     Route::resource('complaints', CustomerComplaintController::class)->only(['index', 'create', 'store', 'show']);
     Route::post('/complaint/{id}/accept', [CustomerComplaintController::class, 'accept'])->name('accept');
     Route::post('/complaint/{id}/reject', [CustomerComplaintController::class, 'reject'])->name('reject');
@@ -56,11 +56,10 @@ Route::middleware('role:customer')->prefix('/customer')->name('customer.')->grou
 Route::middleware('role:employee')->prefix('/employee')->name('employee.')->group(function () {
     Route::get('/', [DashboardController::class, 'employee'])->name('home');
     Route::resource('tasks', EmployeeTaskController::class)->only(['index', 'show']);
+    Route::get('/complaints/search', [EmployeeTaskController::class, 'search'])->name('tasks.search');
     Route::put('task/{id}/start', [EmployeeTaskController::class, 'start'])->name('task.start');
     Route::get('task/{id}/complete', [EmployeeTaskController::class, 'showCompleteForm'])->name('task.complete-form');
     Route::put('task/{id}/complete', [EmployeeTaskController::class, 'completeTask'])->name('task.complete');
-    // Route::get('/tasks/pending', [EmployeeController::class, 'pending'])->name('pending');
-    // Route::get('/tasks/completed', [EmployeeController::class, 'completed'])->name('completed');
 });
 
 // Profile Routes
@@ -70,6 +69,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 //

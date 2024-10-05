@@ -1,21 +1,9 @@
 <x-app-layout>
     <x-slot:title>Create Complaint</x-slot:title>
-    <nav x-data="{ open: false }" class="pt-6 bg-gray-800">
-        <div class="px-4 px-6 mx-auto max-w-7xl lg:px-8">
-            <div class="flex justify-between h-12">
-                <div class="flex">
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-sub-nav-link href="{{ route('customer.complaints.index') }}" :active="request()->routeIs('customer.complaints.index')">
-                            All Complaints</x-sub-nav-link>
-                        <x-sub-nav-link href="{{ route('customer.complaints.create') }}" :active="request()->routeIs('customer.complaints.create')"
-                            class="flex justify-end text-blue-500">Create Complaint</x-sub-nav-link>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+
 
     <div class="max-w-4xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
+
         <form method="POST" action="{{ route('customer.complaints.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="space-y-6">

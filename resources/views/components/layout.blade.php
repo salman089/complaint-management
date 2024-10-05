@@ -53,7 +53,7 @@
 <body>
     <header>
         <div class="logo">
-            <x-application-logo class="w-20 h-16 text-gray-500 fill-current" />
+            <x-application-logo class="w-24 h-16 text-gray-500 fill-current" />
         </div>
         <nav>
             <div class="flex space-x-4">

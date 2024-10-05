@@ -14,7 +14,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employees = User::where('role', 'employee')->orderBy('name')->paginate(25);
+        $employees = User::where('role', 'employee')->orderBy('name')->paginate(10);
         return view('admin.employees.index', compact('employees'));
     }
 
@@ -31,7 +31,7 @@ class EmployeeController extends Controller
                     ->orWhere('phone', 'like', '%' . $request->search . '%');
             })
             ->orderBy('name')
-            ->paginate(25);
+            ->paginate(10);
 
         return view('admin.employees.index', compact('employees'));
     }

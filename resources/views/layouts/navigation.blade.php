@@ -5,7 +5,7 @@
             <div class="flex">
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('home') }}">
-                        <x-application-logo class="w-20 h-12 text-gray-500 fill-current" />
+                        <x-application-logo class="w-20 h-12 text-gray-500 fill-current0" />
                     </a>
                 </div>
 
@@ -33,8 +33,11 @@
                     @endauth
 
                     @if (auth()->user()->hasRole('customer'))
-                    <x-nav-link :href="route('customer.complaints.index')" :active="request()->routeIs('customer.complaints.*')">
+                    <x-nav-link :href="route('customer.complaints.index')" :active="request()->routeIs('customer.complaints.index')">
                         Complaints
+                    </x-nav-link>
+                    <x-nav-link :href="route('customer.complaints.create')" :active="request()->routeIs('customer.complaints.create')">
+                        Create Complaint
                     </x-nav-link>
                     <x-nav-link :href="route('customer.contact')" :active="request()->routeIs('customer.contact')">
                         Contact Us

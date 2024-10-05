@@ -59,12 +59,12 @@
                             <h2 class="mb-2 text-lg font-semibold text-gray-900">Shop</h2>
                             <a href="{{ asset('images/shop.png') }}" target="_blank">
                                 <img src="{{ asset('images/shop.png') }}" alt="Our Shop"
-                                    class="w-full max-w-5xl mb-6 rounded-lg h-90">
+                                    class="w-full mb-6 rounded-lg max-w-7xl h-87">
                             </a>
                             <h2 class="mb-2 text-lg font-semibold text-gray-900">Where to find us</h2>
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d949.9250330610669!2d73.194992!3d17.758763!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be9c351eaf5124b%3A0x5ea06e1c5a7e72a5!2sShaukat%20Electric%20Works!5e0!3m2!1sen!2sin!4v1727893550578!5m2!1sen!2sin"
-                                width="98.5%" height="450" style="border:0; border-radius: 0.5rem;"
+                                width="100%" height="450" style="border:0; border-radius: 0.5rem;"
                                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </section>

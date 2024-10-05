@@ -6,6 +6,7 @@ use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Mail\ComplaintStatus;
 use App\Models\CompletionImage;
+use App\Mail\ComplaintCompleted;
 use App\Models\ComplaintAssignee;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +19,35 @@ class TaskController extends Controller
         $status = $request->query('status', 'assigned');
 
         $tasks = ComplaintAssignee::where('user_id', Auth::id())
-        ->whereHas('complaint', function ($query) use ($status) {
-            $query->where('status', $status);
-        })
-        ->get();
+            ->whereHas('complaint', function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->paginate(10);
+
+        return view('employee.tasks.index', compact('status', 'tasks'));
+    }
+
+    public function search(Request $request)
+    {
+        $status = $request->query('status', 'assigned');
+
+        $request->validate([
+            'search' => ['required', 'string', 'max:255'],
+        ]);
+
+        $tasks = ComplaintAssignee::where('user_id', Auth::id())
+            ->whereHas('complaint', function ($query) use ($status, $request) {
+                $query->where('status', $status)
+                    ->where(function ($query) use ($request) {
+                        $query->where('complaint', 'like', '%' . $request->search . '%')
+                            ->orWhere('phone', 'like', '%' . $request->search . '%')
+                            ->orWhere('street_address', 'like', '%' . $request->search . '%')
+                            ->orWhere('city', 'like', '%' . $request->search . '%')
+                            ->orWhere('region', 'like', '%' . $request->search . '%')
+                            ->orWhere('postal_code', 'like', '%' . $request->search . '%');
+                    });
+            })
+            ->paginate(10);
 
         return view('employee.tasks.index', compact('status', 'tasks'));
     }
@@ -41,7 +67,7 @@ class TaskController extends Controller
         Mail::to($task->user->email)->send(new ComplaintStatus($task, 'in progress'));
 
 
-        return redirect()->route('employee.tasks.index', $id)->with('success', 'Task has been started.');
+        return redirect()->route('employee.tasks.index', ['status' => 'in progress'])->with('success', 'Task has been started.');
     }
 
     public function showCompleteForm($id)
@@ -54,6 +80,7 @@ class TaskController extends Controller
     {
         $data = $request->validate([
             'completion_note' => ['required', 'string', 'max:256'],
+            'completion_image' => ['nullable', 'array'],
             'completion_image.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
@@ -73,9 +100,8 @@ class TaskController extends Controller
                 ]);
             }
         }
+        Mail::to($complaint->user->email)->send(new ComplaintCompleted($complaint, 'completed'));
 
-        Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'completed'));
-
-        return redirect()->route('employee.tasks.index')->with('success', 'Task completed successfully.');
+        return redirect()->route('employee.tasks.index', ['status' => 'completed'])->with('success', 'Task completed successfully.');
     }
 }

@@ -13,12 +13,40 @@ class ComplaintController extends Controller
 {
     public function index()
     {
-        $complaints = Complaint::orderBy('id', 'desc')
-            ->where('user_id', auth()->id())
-            ->paginate(25);
+        $status = request('status', 'pending');
 
-        return view('customer.complaints.index', compact('complaints'));
+        $complaints = Complaint::where('status', $status)
+            ->where('user_id', auth()->id())
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return view('customer.complaints.index', compact('status', 'complaints'));
     }
+
+    public function search(Request $request)
+    {
+        $status = $request->query('status', 'pending');
+
+        $request->validate([
+            'search' => ['required', 'string', 'max:255'],
+        ]);
+
+        $complaints = Complaint::where('user_id', auth()->id())
+            ->where('status', $status)
+            ->where(function ($query) use ($request) {
+                $query->where('complaint', 'like', '%' . $request->search . '%')
+                    ->orWhere('phone', 'like', '%' . $request->search . '%')
+                    ->orWhere('street_address', 'like', '%' . $request->search . '%')
+                    ->orWhere('city', 'like', '%' . $request->search . '%')
+                    ->orWhere('region', 'like', '%' . $request->search . '%')
+                    ->orWhere('postal_code', 'like', '%' . $request->search . '%');
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return view('customer.complaints.index', compact('status', 'complaints'));
+    }
+
 
     public function create()
     {
@@ -49,14 +77,14 @@ class ComplaintController extends Controller
             'postal_code' => $data['postal_code'],
         ]);
 
-        foreach ($data['files'] ?? []as $file) {
+        foreach ($data['files'] ?? [] as $file) {
             $path = $file->store('complaints', 'public');
             $complaint->photos()->create(['file_path' => $path]);
         }
 
         Mail::to(auth()->user()->email)->send(new ComplaintCreated($complaint));
 
-        return redirect()->route('customer.complaints.index')->with('success', 'Complaint submitted successfully.');
+        return redirect()->route('customer.complaints.index', ['status' => 'pending'])->with('success', 'Complaint submitted successfully.');
     }
 
     public function show($id)
@@ -70,9 +98,9 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($id);
         $complaint->update(['status' => 'accepted']);
 
-       Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'accepted'));
+        Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'accepted'));
 
-        return redirect()->route('customer.complaints.index')->with('success', 'Complaint accepted successfully.');
+        return redirect()->route('customer.complaints.index', ['status' => 'accepted'])->with('success', 'Complaint accepted successfully.');
     }
 
     public function reject($id)
@@ -82,6 +110,6 @@ class ComplaintController extends Controller
 
         Mail::to($complaint->user->email)->send(new ComplaintStatus($complaint, 'rejected'));
 
-        return redirect()->route('customer.complaints.index')->with('danger', 'Complaint rejected successfully.');
+        return redirect()->route('customer.complaints.index', ['status' => 'rejected'])->with('danger', 'Complaint rejected successfully.');
     }
 }

@@ -60,7 +60,7 @@ class DashboardController extends Controller
     public function employee()
     {
        $tasks = ComplaintAssignee::where('user_id', Auth::id())
-            ->with('complaint') 
+            ->with('complaint')
             ->get();
 
        $assigned = ComplaintAssignee::where('user_id', Auth::id())
@@ -127,9 +127,21 @@ class DashboardController extends Controller
 
         $pendingAmount = Quotation::whereIn('complaint_id', $mergedAccepted)->sum('price');
 
-        $remainingAmount = $paidAmount - $pendingAmount;
+        $totalAmount = 0;
+        $remainingAmount = 0;
 
-        $totalAmount = $paidAmount + $remainingAmount;
+        if ($paidAmount > $pendingAmount) {
+            $remainingAmount = $paidAmount - $pendingAmount;
+        } else {
+            $remainingAmount = $pendingAmount - $paidAmount;
+        }
+
+        if($pendingAmount == 0) {
+            $remainingAmount = 0;
+            $totalAmount = $paidAmount;
+        } else {
+            $totalAmount = $paidAmount + $remainingAmount;
+        }
 
         return view('admin.dashboard', compact(
             'complaints',

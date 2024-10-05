@@ -6,8 +6,8 @@
 
     <div class="py-10">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-8 text-gray-900">
+            <div class="overflow-hidden rounded-lg shadow-xl bg-gradient-to-r from-gray-900 to-gray-700">
+                <div class="p-8 text-white">
                     Welcome Back Admin, {{ Auth::user()->name }} !
                 </div>
             </div>
@@ -24,25 +24,25 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Type</th>
-                                <th class="px-0 py-3 text-xs font-medium text-left text-gray-500 uppercase ">Amount</th>
+                                <th class="px-2 py-3 text-xs font-medium text-left text-gray-500 uppercase ">Amount</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Pending</td>
-                                <td class="px-0 py-4 text-sm text-gray-500">₹{{ number_format($pendingAmount, 2) }}</td>
+                                <td class="px-2 py-4 text-sm text-gray-500">₹{{ number_format($pendingAmount, 2) }}</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Paid</td>
-                                <td class="px-0 py-4 text-sm text-gray-500">₹{{ number_format($paidAmount, 2) }}</td>
+                                <td class="px-2 py-4 text-sm text-gray-500">₹{{ number_format($paidAmount, 2) }}</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Remaining</td>
-                                <td class="px-0 py-4 text-sm text-gray-500">₹{{ number_format($remainingAmount, 2) }}</td>
+                                <td class="px-2 py-4 text-sm text-gray-500">₹{{ number_format($remainingAmount, 2) }}</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900"><strong>Total</strong></td>
-                                <td class="px-0 py-4 text-sm text-gray-500"><strong>₹{{ number_format($totalAmount, 2) }}</strong></td>
+                                <td class="px-2 py-4 text-sm text-gray-500"><strong>₹{{ number_format($totalAmount, 2) }}</strong></td>
                             </tr>
                         </tbody>
                     </table>
@@ -61,13 +61,13 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Type</th>
-                                <th class="px-8 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
+                                <th class="px-5 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Customers</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $users->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $users->count() }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -86,13 +86,13 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Type</th>
-                                <th class="px-8 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
+                                <th class="px-5 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Employees</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $employees->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $employees->count() }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -111,45 +111,45 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Status</th>
-                                <th class="px-8 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
+                                <th class="px-5 py-3 text-xs font-medium text-left text-gray-500 uppercase">Total</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr>
                                 <td class="px-6 py-4 text-sm text-gray-900">Pending</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $pending->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $pending->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Quoted</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $quoted->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Quoted</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $quoted->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Accepted</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $accepted->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Accepted</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $accepted->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Rejected</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $rejected->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Rejected</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $rejected->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Assigned</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $assigned->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Assigned</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $assigned->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">In Progress</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $inprogress->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">In Progress</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $inprogress->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Completed</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $completed->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Completed</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $completed->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900">Closed</td>
-                                <td class="px-8 py-4 text-sm text-gray-500">{{ $closed->count() }}</td>
+                                <td class="px-5 py-4 text-sm text-gray-900">Closed</td>
+                                <td class="px-5 py-4 text-sm text-gray-500">{{ $closed->count() }}</td>
                             </tr>
                             <tr>
-                                <td class="px-6 py-4 text-sm text-gray-900"><strong>Complaints</strong></td>
-                                <td class="px-8 py-4 text-sm text-gray-500"><strong>{{ $complaints->count() }}</strong>
+                                <td class="px-5 py-4 text-sm text-gray-900"><strong>Complaints</strong></td>
+                                <td class="px-5 py-4 text-sm text-gray-500"><strong>{{ $complaints->count() }}</strong>
                                 </td>
                             </tr>
                         </tbody>
