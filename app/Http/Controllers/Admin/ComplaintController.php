@@ -20,6 +20,8 @@ class ComplaintController extends Controller
 
         $complaints = Complaint::where('status', $status)->latest()->paginate(10);
 
+        $complaints->appends(['status' => $status]);
+
         return view('admin.complaints.index', compact('complaints', 'status'));
     }
 

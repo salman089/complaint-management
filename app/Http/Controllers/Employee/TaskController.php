@@ -24,6 +24,8 @@ class TaskController extends Controller
             })
             ->paginate(10);
 
+        $tasks->appends(['status' => $status]);
+
         return view('employee.tasks.index', compact('status', 'tasks'));
     }
 

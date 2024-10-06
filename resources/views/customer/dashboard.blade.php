@@ -69,7 +69,7 @@
                                         <td class="px-6 py-4 text-sm text-gray-500">{{ $closed->count() }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">All</td>
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">Complaints</td>
                                         <td class="px-6 py-4 text-sm font-bold text-gray-900">{{ $complaints->count() }}</td>
                                     </tr>
                                 </tbody>

@@ -111,37 +111,20 @@ class DashboardController extends Controller
         $completed = Complaint::where('status', 'completed')->get();
         $closed = Complaint::where('status', 'closed')->get();
 
-
         $acceptedComplaints = Complaint::where('status', 'accepted')->pluck('id')->toArray();
         $assignedComplaints = Complaint::where('status', 'assigned')->pluck('id')->toArray();
         $inprogessComplaints = Complaint::where('status', 'in progress')->pluck('id')->toArray();
-
-        $closedComplaints = Complaint::where('status', 'closed')->pluck('id')->toArray();
         $completedComplaints = Complaint::where('status', 'completed')->pluck('id')->toArray();
+        $closedComplaints = Complaint::where('status', 'closed')->pluck('id')->toArray();
 
-        $mergedAccepted = array_merge($acceptedComplaints, $assignedComplaints, $inprogessComplaints);
+        $mergedPending = array_merge($acceptedComplaints, $assignedComplaints, $inprogessComplaints, $completedComplaints);
 
-        $mergedComplaints = array_merge($closedComplaints, $completedComplaints);
+        $paidAmount = Quotation::whereIn('complaint_id', $closedComplaints)->sum('price');
 
-        $paidAmount = Quotation::whereIn('complaint_id', $mergedComplaints)->sum('price');
+        $pendingAmount = Quotation::whereIn('complaint_id', $mergedPending)->sum('price');
 
-        $pendingAmount = Quotation::whereIn('complaint_id', $mergedAccepted)->sum('price');
+        $totalAmount = $paidAmount + $pendingAmount;
 
-        $totalAmount = 0;
-        $remainingAmount = 0;
-
-        if ($paidAmount > $pendingAmount) {
-            $remainingAmount = $paidAmount - $pendingAmount;
-        } else {
-            $remainingAmount = $pendingAmount - $paidAmount;
-        }
-
-        if($pendingAmount == 0) {
-            $remainingAmount = 0;
-            $totalAmount = $paidAmount;
-        } else {
-            $totalAmount = $paidAmount + $remainingAmount;
-        }
 
         return view('admin.dashboard', compact(
             'complaints',
@@ -158,7 +141,6 @@ class DashboardController extends Controller
             'paidAmount',
             'pendingAmount',
             'totalAmount',
-            'remainingAmount'
         ));
     }
 }

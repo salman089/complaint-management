@@ -20,6 +20,8 @@ class ComplaintController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(10);
 
+        $complaints->appends(['status' => $status]);
+
         return view('customer.complaints.index', compact('status', 'complaints'));
     }
 
