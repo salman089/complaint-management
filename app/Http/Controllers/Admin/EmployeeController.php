@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Mail\EmployeeCreated;
+use App\Mail\EmployeeDeleted;
+use App\Mail\EmployeeUpdated;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -87,14 +89,19 @@ class EmployeeController extends Controller
         $employee = User::findOrFail($id);
         $employee->update($data);
 
+        Mail::to($employee->email)->send(new EmployeeUpdated($employee));
+
         return redirect()->route('admin.employees.index')->with('update', 'Employee updated successfully.');
     }
 
 
     public function destroy($id)
     {
+        $employee =User::where('id', $id)->where('role', 'employee')->firstOrFail();
 
-        User::where('id', $id)->where('role', 'employee')->delete();
+        Mail::to($employee->email)->send(new EmployeeDeleted($employee));
+
+        $employee->delete();
 
         return redirect()->route('admin.employees.index')->with('danger', 'Employee deleted successfully.');
     }
