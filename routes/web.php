@@ -39,7 +39,7 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
 
     Route::resource('employees', AdminEmployeeController::class)->except(['show']);
 
-    Route::resource('customers', AdminCustomerController::class)->except(['show']);
+    Route::resource('customers', AdminCustomerController::class)->only(['index']);
 
 
     Route::get('/complaint/{id}/quote', [QuotationController::class, 'create'])->name('create');

@@ -61,10 +61,6 @@
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Complaints
                                     </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                                        Actions
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -81,16 +77,6 @@
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $customer->complaints->count() }}
-                                        </td>
-                                        <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                                            <form action="{{ route('admin.customers.destroy', $customer->id) }}"
-                                                method="POST" class="inline-block"
-                                                onsubmit="return confirm('Are you sure you want to delete this customer?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:text-red-900">Delete</button>
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
