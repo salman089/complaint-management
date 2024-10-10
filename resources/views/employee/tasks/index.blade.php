@@ -119,9 +119,8 @@
                     @endif
                 </div>
             </div>
+            <br>
+            {{ $tasks->links() }}
         </div>
-    </div>
-    <div class="flex justify-center py-12">
-        {{ $tasks->links() }}
     </div>
 </x-app-layout>
