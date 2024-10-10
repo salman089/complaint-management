@@ -44,7 +44,11 @@ class ComplaintController extends Controller
 
     public function show($id)
     {
-        $complaint = Complaint::findOrFail($id);
+        $complaint = Complaint::whereHas('user')->where('id', $id)->first();
+        if (!$complaint) {
+            abort(404);
+        }
+
         return view('admin.complaints.show', compact('complaint'));
     }
 

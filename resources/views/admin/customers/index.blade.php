@@ -47,6 +47,10 @@
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                                        ID
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Name
                                     </th>
                                     <th scope="col"
@@ -67,12 +71,14 @@
                                 @foreach ($customers as $customer)
                                     <tr>
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace">
+                                            {{ $customer->id }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace">
                                             {{ $customer->name }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace">
                                             {{ $customer->email }}
                                         </td>
-
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $customer->complaints->count() }}
                                         </td>

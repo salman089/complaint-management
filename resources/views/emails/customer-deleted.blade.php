@@ -70,8 +70,8 @@
         <p>Dear {{ $customer->name }},</p>
         <p>We are sorry to inform you that your account has been deleted.</p>
         <ul>
-            <li><strong>Employer ID:</strong> {{ $customer->id }}</li>
-            <li><strong>Employer Name:</strong> {{ $customer->name }}</li>
+            <li><strong>Customer ID:</strong> {{ $customer->id }}</li>
+            <li><strong>Customer Name:</strong> {{ $customer->name }}</li>
         </ul>
         <p>Thank you for being with us.</p>
         <p>We are sorry to see you go.</p>

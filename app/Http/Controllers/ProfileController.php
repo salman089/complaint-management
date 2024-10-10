@@ -52,6 +52,12 @@ class ProfileController extends Controller
 
         $user->delete();
 
+        $restoredCustomer = $user->withTrashed()->find($user->id);
+        if ($restoredCustomer) {
+            $restoredCustomer->email = 'deleted' . $restoredCustomer->id . '@example.com';
+            $restoredCustomer->save();
+        }
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -144,6 +144,10 @@
                                 <td class="py-4 text-sm text-gray-500 px-11">{{ $closed->count() }}</td>
                             </tr>
                             <tr>
+                                <td class="px-5 py-4 text-sm text-gray-900">Archived</td>
+                                <td class="py-4 text-sm text-gray-500 px-11">{{ $archived->count() }}</td>
+                            </tr>
+                            <tr>
                                 <td class="px-5 py-4 text-sm text-gray-900"><strong>Complaints</strong></td>
                                 <td class="py-4 text-sm text-gray-500 px-11"><strong>{{ $complaints->count() }}</strong>
                                 </td>

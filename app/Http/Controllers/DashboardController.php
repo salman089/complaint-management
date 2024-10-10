@@ -110,6 +110,7 @@ class DashboardController extends Controller
         $inprogress = Complaint::where('status', 'in progress')->get();
         $completed = Complaint::where('status', 'completed')->get();
         $closed = Complaint::where('status', 'closed')->get();
+        $archived = Complaint::where('status', 'archived')->get();
 
         $acceptedComplaints = Complaint::where('status', 'accepted')->pluck('id')->toArray();
         $assignedComplaints = Complaint::where('status', 'assigned')->pluck('id')->toArray();
@@ -138,6 +139,7 @@ class DashboardController extends Controller
             'inprogress',
             'completed',
             'closed',
+            'archived',
             'paidAmount',
             'pendingAmount',
             'totalAmount',

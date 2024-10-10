@@ -39,11 +39,18 @@ class CustomerController extends Controller
 
         $customer = User::where('id', $id)->where('role', 'customer')->firstOrFail();
 
+        $customer->complaints()->update(['status' => 'archived']);
+
         Mail::to($customer->email)->send(new CustomerDeleted($customer));
 
         $customer->delete();
 
+        $restoredCustomer = User::withTrashed()->find($id);
+        if ($restoredCustomer) {
+            $restoredCustomer->email = 'deleted' . $restoredCustomer->id . '@example.com';
+            $restoredCustomer->save();
+        }
+
         return redirect()->route('admin.customers.index')->with('danger', 'Customer deleted successfully.');
     }
 }
-
