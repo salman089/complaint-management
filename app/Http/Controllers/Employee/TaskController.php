@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Employee;
 
+use App\Models\User;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Mail\ComplaintStatus;
@@ -66,8 +67,13 @@ class TaskController extends Controller
         $task->status = 'in progress';
         $task->save();
 
-        Mail::to($task->user->email)->send(new ComplaintStatus($task, 'in progress'));
+        $admin = User::where('role', 'admin')->first();
 
+        if ($admin) {
+            Mail::to($admin->email)->send(new ComplaintStatus($task, 'in progress'));
+        }
+
+        Mail::to($task->user->email)->send(new ComplaintStatus($task, 'in progress'));
 
         return redirect()->route('employee.tasks.index', ['status' => 'in progress'])->with('success', 'Task has been started.');
     }
@@ -101,6 +107,12 @@ class TaskController extends Controller
                     'file_path' => $path,
                 ]);
             }
+        }
+
+        $admin = User::where('role', 'admin')->first();
+
+        if ($admin) {
+            Mail::to($admin->email)->send(new ComplaintCompleted($complaint, 'completed'));
         }
         Mail::to($complaint->user->email)->send(new ComplaintCompleted($complaint, 'completed'));
 

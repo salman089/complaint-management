@@ -92,6 +92,9 @@ class ComplaintController extends Controller
 
         foreach ($data['user_ids'] as $user_id) {
             $complaint->assignees()->create(['user_id' => $user_id]);
+
+            $employee = User::findOrFail($user_id);
+            Mail::to($employee->email)->send(new ComplaintAssigned($complaint, $data['user_ids'], $data['additional_notes'] ?? null));
         }
 
         Mail::to($complaint->user->email)->send(new ComplaintAssigned($complaint, $data['user_ids'], $data['additional_notes'] ?? null));

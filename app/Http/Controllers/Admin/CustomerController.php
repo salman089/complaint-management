@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Mail\CustomerDeleted;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -33,11 +36,14 @@ class CustomerController extends Controller
 
     public function destroy($id)
     {
-        $customer =User::where('id', $id)->where('role', 'customer')->firstOrFail();
+
+        $customer = User::where('id', $id)->where('role', 'customer')->firstOrFail();
+
+        Mail::to($customer->email)->send(new CustomerDeleted($customer));
 
         $customer->delete();
 
         return redirect()->route('admin.customers.index')->with('danger', 'Customer deleted successfully.');
     }
-
 }
+
