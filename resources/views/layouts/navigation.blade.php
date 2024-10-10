@@ -51,6 +51,9 @@
                     <x-nav-link :href="route('admin.complaints.index')" :active="request()->routeIs('admin.complaints.*')">
                         Complaints
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.customers.index')" :active="request()->routeIs('admin.customers.*')">
+                        Customers
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.employees.index')" :active="request()->routeIs('admin.employees.*')">
                         Employees
                     </x-nav-link>

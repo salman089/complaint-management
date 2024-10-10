@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Employee\TaskController as EmployeeTaskController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\QuotationController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\ComplaintController as AdminComplaintController;
 use App\Http\Controllers\Customer\ComplaintController as CustomerComplaintController;
@@ -22,6 +23,7 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::get('/', [DashboardController::class, 'admin'])->name('home');
     Route::get('/complaints/search', [AdminComplaintController::class, 'search'])->name('complaints.search');
     Route::get('/employees/search', [AdminEmployeeController::class, 'search'])->name('employees.search');
+    Route::get('/customers/search', [AdminCustomerController::class, 'search'])->name('customers.search');
 
     Route::resource('/complaints', AdminComplaintController::class)->only(['index', 'show']);
 
@@ -36,6 +38,9 @@ Route::middleware('role:admin')->prefix('/admin')->name('admin.')->group(functio
     Route::post('/complaint/{id}/assign-employee', [AdminComplaintController::class, 'assignEmployee'])->name('assign-employee');
 
     Route::resource('employees', AdminEmployeeController::class)->except(['show']);
+
+    Route::resource('customers', AdminCustomerController::class)->except(['show']);
+
 
     Route::get('/complaint/{id}/quote', [QuotationController::class, 'create'])->name('create');
     Route::post('/complaint/{id}/quote', [QuotationController::class, 'store'])->name('store');
@@ -71,4 +76,3 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-//
